@@ -237,6 +237,25 @@ fn save_file_dialog(
 }
 
 pub fn run() {
+    #[cfg(windows)]
+    {
+        let my_pid = std::process::id();
+        let mut kill_cmd = Command::new("taskkill");
+        kill_cmd
+            .args([
+                "/F",
+                "/IM",
+                "SplendThemeBuilder.exe",
+                "/FI",
+                &format!("PID ne {my_pid}"),
+            ])
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .creation_flags(CREATE_NO_WINDOW);
+        let _ = kill_cmd.status();
+    }
+
     let log_path = std::env::temp_dir().join("splend_theme_builder_boot.log");
     let _ = std::fs::write(&log_path, format!("Starting SplendThemeBuilder...\n"));
     let log_path_panic = log_path.clone();
@@ -250,6 +269,20 @@ pub fn run() {
 
     let app = tauri::Builder::default()
         .manage(BridgeState(Mutex::new(None)))
+        .on_window_event(|window, event| {
+            let log_p = std::env::temp_dir().join("splend_theme_builder_boot.log");
+            match event {
+                tauri::WindowEvent::CloseRequested { .. }
+                | tauri::WindowEvent::Destroyed => {
+                    let _ = std::fs::OpenOptions::new()
+                        .create(true)
+                        .append(true)
+                        .open(&log_p)
+                        .and_then(|mut f| writeln!(f, "WindowEvent on {}: {:?}", window.label(), event));
+                }
+                _ => {}
+            }
+        })
         .setup(|app| {
             let log_p = std::env::temp_dir().join("splend_theme_builder_boot.log");
             let _ = std::fs::OpenOptions::new().create(true).append(true).open(&log_p).and_then(|mut f| writeln!(f, "Setup reached, main window: {}", app.get_webview_window("main").is_some()));
