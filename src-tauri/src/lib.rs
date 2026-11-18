@@ -237,8 +237,28 @@ fn save_file_dialog(
 }
 
 pub fn run() {
+    let log_path = std::env::temp_dir().join("splend_theme_builder_boot.log");
+    let _ = std::fs::write(&log_path, format!("Starting SplendThemeBuilder...\n"));
+    let log_path_panic = log_path.clone();
+    std::panic::set_hook(Box::new(move |info| {
+        let _ = std::fs::OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(&log_path_panic)
+            .and_then(|mut f| writeln!(f, "PANIC: {info}"));
+    }));
+
     let app = tauri::Builder::default()
         .manage(BridgeState(Mutex::new(None)))
+        .setup(|app| {
+            let log_p = std::env::temp_dir().join("splend_theme_builder_boot.log");
+            let _ = std::fs::OpenOptions::new().create(true).append(true).open(&log_p).and_then(|mut f| writeln!(f, "Setup reached, main window: {}", app.get_webview_window("main").is_some()));
+            if let Some(w) = app.get_webview_window("main") {
+                let _ = w.show();
+                let _ = w.set_focus();
+            }
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             bridge_call,
             app_info,
