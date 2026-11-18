@@ -1,0 +1,30 @@
+; SPLEND // Windows Theme Studio v2.0 - Doctor Doom Emerald
+[Theme]
+DisplayName=Doctor Doom Emerald
+ThemeId={8B5C4E19-3D2A-4F91-9A3E-71D00E3E4A31}
+
+[Control Panel\Desktop]
+Wallpaper=C:\Users\gorke\Documents\wallpapers\doctor-doom-5120x2194-26922.jpg
+TileWallpaper=0
+WallpaperStyle=10
+Pattern=
+
+[Control Panel\Colors]
+Window=255 255 255
+WindowText=0 0 0
+Hilight=31 74 49
+HilightText=255 255 255
+HotTrackingColor=108 168 129
+
+[VisualStyles]
+Path=%ResourceDir%\Themes\Aero\Aero.msstyles
+ColorStyle=NormalColor
+Size=NormalSize
+AutoColorization=0
+ColorizationColor=0XC41F4A31
+SystemMode=Dark
+AppMode=Dark
+VisualStyleVersion=10
+
+[MasterThemeSelector]
+MTSM=RJSPBS

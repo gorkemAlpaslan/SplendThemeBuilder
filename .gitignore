@@ -1,0 +1,13 @@
+# User-specific runtime state & local paths
+DoomThemeSuite/config.ini
+DoomThemeSuite/snapshots.ini
+DoomThemeSuite/custom_themes.ini
+DoomThemeSuite/widget_notes.txt
+DoomThemeSuite/GeneratedIcons/
+
+# IDE & temporary artifacts
+.vs/
+*.user
+*.suo
+*.pdb
+*.log
