@@ -17,3 +17,4 @@ if errorlevel 1 exit /b 1
 
 echo Build & self-test succeeded!
 endlocal
+

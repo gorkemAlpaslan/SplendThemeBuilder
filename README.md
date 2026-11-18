@@ -1,7 +1,7 @@
 # 🎨 SplendThemeBuilder (Doom Control Center v3.0)
 
-> **Zero-dependency Windows 10/11 Native Theme Studio, 10-bit HDR Explorer Glass Engine, 8-Widget Desktop HUD & System Boost Suite**  
-> Built purely in C# (.NET Framework 4.x) with custom double-buffered GDI+ vector rendering, 32-bit ARGB layered windows (`WS_EX_LAYERED`), and native Win32/DWM P/Invoke — **no Electron, no WebView2, no external runtime dependencies.**
+> **GPU-Accelerated Tauri v2 + React 19 + Tailwind CSS v4 Desktop Theme Studio, 10-bit HDR Explorer Glass Engine, 8-Widget Desktop HUD & System Boost Suite**  
+> Powered by a **Tauri v2 (Rust) + React 19 + Tailwind CSS v4** frontend (same engine architecture as SplendMaster) communicating over a zero-overhead JSON-RPC bridge with a native **C# (.NET 4.x) Win32/DWM/WASAPI** backend (`DoomControlCenter.exe --bridge`).
 
 ![Preview](preview.png)
 
@@ -77,3 +77,4 @@ DoomControlCenter.exe --self-test
 
 ## 📄 License
 MIT License — Created by **Görkem Alpaslan**.
+

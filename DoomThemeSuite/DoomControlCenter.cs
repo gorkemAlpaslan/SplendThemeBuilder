@@ -6100,6 +6100,10 @@ namespace DoomThemeSuite
             bool startMinimized = false;
             bool applyDefaultAndExit = false;
             bool runSelfTest = false;
+            bool runBridge = false;
+            bool runDaemon = false;
+            bool runCli = false;
+            string cliJson = null;
 
             if (args != null)
             {
@@ -6112,8 +6116,25 @@ namespace DoomThemeSuite
                         applyDefaultAndExit = true;
                     else if (a == "--self-test" || a == "/self-test")
                         runSelfTest = true;
+                    else if (a == "--bridge" || a == "/bridge")
+                        runBridge = true;
+                    else if (a == "--daemon" || a == "/daemon")
+                        runDaemon = true;
+                    else if (a == "--cli" || a == "/cli")
+                    {
+                        runCli = true;
+                        if (i + 1 < args.Length)
+                            cliJson = args[++i];
+                    }
                 }
             }
+
+            if (runCli)
+                return NativeBridge.RunCli(cliJson);
+            if (runBridge)
+                return NativeBridge.RunBridgeLoop();
+            if (runDaemon)
+                return NativeBridge.RunDaemon();
 
             // Automated "--self-test" CLI verification mode (v2.0 + v3.0 Bento Command Deck checks)
             if (runSelfTest)
